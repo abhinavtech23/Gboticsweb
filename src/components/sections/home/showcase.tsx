@@ -27,7 +27,7 @@ const products = [
 
 export default function ShowcaseSection() {
   return (
-    <section className="py-24 bg-[#0a0a0f]">
+    <section className="py-24 bg-transparent">
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>

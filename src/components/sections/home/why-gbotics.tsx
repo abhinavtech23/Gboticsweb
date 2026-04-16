@@ -1,6 +1,6 @@
 export default function WhyGboticsSection() {
   return (
-    <section className="py-24 bg-[#0a0a0f] relative overflow-hidden">
+    <section className="py-24 bg-transparent relative overflow-hidden">
        {/* Background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#00f0ff]/5 rounded-full blur-[120px] pointer-events-none"></div>
 

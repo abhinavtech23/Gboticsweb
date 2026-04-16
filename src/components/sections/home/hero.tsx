@@ -1,12 +1,13 @@
 "use client";
 
+import { TextSplit } from "@/components/ui/split-text";
 import { SplineScene } from "@/components/ui/splite";
 import { Spotlight } from "@/components/ui/spotlight";
 import { ArrowRight } from "lucide-react";
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-[#0a0a0f]">
+    <section className="relative w-full min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-transparent">
       <Spotlight
         className="-top-40 left-0 md:left-60 md:-top-20"
         fill="#00f0ff"
@@ -20,7 +21,9 @@ export default function HeroSection() {
           </div>
           
           <h1 className="text-5xl md:text-7xl font-bold tracking-tighter leading-tight mb-6">
-            Engineering the <br/>
+            <TextSplit className="justify-start w-full" maxMove={60} falloff={0.2}>
+              Engineering the
+            </TextSplit>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#00f0ff] to-blue-600">
               Future Today.
             </span>

@@ -79,13 +79,13 @@ import { Lightbulb, Wrench, TrendingUp, Laptop, Cpu } from "lucide-react";
 
 export default function AboutPage() {
   return (
-    <div className="bg-[#0a0a0f] min-h-screen">
+    <div className="bg-transparent min-h-screen">
       {/* Hero / Story Section with Background Boxes */}
       <section className="relative w-full h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Boxes />
-          <div className="absolute inset-0 bg-[#0a0a0f] [mask-image:radial-gradient(transparent,white)] pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0a0a0f]/50 to-[#0a0a0f]"></div>
+          <div className="absolute inset-0 bg-transparent [mask-image:radial-gradient(transparent,white)] pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0a0a0f]/50 to-transparent"></div>
         </div>
         
         <div className="container mx-auto px-6 relative z-10 flex flex-col items-center text-center">
@@ -131,7 +131,7 @@ export default function AboutPage() {
       </section>
 
       {/* Timeline Section */}
-      <section className="py-24 bg-black relative z-10">
+      <section className="py-24 bg-transparent relative z-10">
         <div className="container mx-auto px-6 text-center mb-4">
           <h2 className="text-4xl font-bold">The Journey</h2>
           <p className="text-white/50 mt-4 max-w-xl mx-auto">Click nodes to explore our company milestones and connected achievements.</p>
@@ -142,7 +142,7 @@ export default function AboutPage() {
       </section>
 
       {/* Leadership Team */}
-      <section className="py-32 bg-[#0a0a0f] relative z-10">
+      <section className="py-32 bg-transparent relative z-10">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
             <div>

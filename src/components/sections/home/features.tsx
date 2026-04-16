@@ -26,7 +26,7 @@ const features = [
 
 export default function FeaturesSection() {
   return (
-    <section className="py-32 bg-[#0a0a0f] relative overflow-hidden">
+    <section className="py-32 bg-transparent relative overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[1px] bg-gradient-to-r from-transparent via-[#00f0ff]/30 to-transparent"></div>
       
       <div className="container mx-auto px-6 relative z-10">

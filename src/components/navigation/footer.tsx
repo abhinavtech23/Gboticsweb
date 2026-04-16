@@ -3,7 +3,7 @@ import { Globe, Briefcase, Code, ArrowRight } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0a0a0f] pt-24 pb-12 border-t border-white/5 relative overflow-hidden">
+    <footer className="bg-transparent pt-24 pb-12 border-t border-white/5 relative overflow-hidden">
       {/* Decorative neon line on top edge */}
       <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#00f0ff]/50 to-transparent"></div>
 
