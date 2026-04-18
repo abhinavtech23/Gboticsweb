@@ -1,6 +1,5 @@
 "use client";
 
-import { TextSplit } from "@/components/ui/split-text";
 import { SplineScene } from "@/components/ui/splite";
 import { Spotlight } from "@/components/ui/spotlight";
 import { ArrowRight } from "lucide-react";
@@ -21,9 +20,9 @@ export default function HeroSection() {
           </div>
           
           <h1 className="text-5xl md:text-7xl font-bold tracking-tighter leading-tight mb-6">
-            <TextSplit className="justify-start w-full" maxMove={60} falloff={0.2}>
+            <span className="block w-full">
               Engineering the
-            </TextSplit>
+            </span>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#00f0ff] to-blue-600">
               Future Today.
             </span>

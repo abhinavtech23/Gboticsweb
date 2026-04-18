@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { ArrowUpRight, Filter, Package } from "lucide-react";
-import { Product } from "@/app/actions/products";
+import { Product, incrementProductView } from "@/app/actions/products";
 
 export default function ProductGrid({ initialProducts }: { initialProducts: Product[] }) {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -82,7 +82,13 @@ export default function ProductGrid({ initialProducts }: { initialProducts: Prod
               <p className="text-white/60 text-sm leading-relaxed mb-6 line-clamp-3">
                 {product.description}
               </p>
-              <button className="flex items-center gap-2 text-sm font-medium text-[#00f0ff] group-hover:text-white transition-colors w-fit mt-auto">
+              <button 
+                onClick={async () => {
+                  await incrementProductView(product.id);
+                  alert(`Registration for intent to view '${product.name}' recorded! Details coming soon.`);
+                }}
+                className="flex items-center gap-2 text-sm font-medium text-[#00f0ff] group-hover:text-white transition-colors w-fit mt-auto"
+              >
                 View Details
                 <ArrowUpRight size={16} />
               </button>

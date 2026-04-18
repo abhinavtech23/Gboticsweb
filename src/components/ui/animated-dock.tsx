@@ -36,7 +36,7 @@ export const AnimatedDock = ({ className, items }: AnimatedDockProps) => {
       onMouseMove={(e) => mouseX.set(e.pageX)}
       onMouseLeave={() => mouseX.set(Infinity)}
       className={cn(
-        "mx-auto flex h-16 items-end gap-4 rounded-2xl bg-[#0d1117]/50 border border-[#00f0ff]/20 shadow-md px-4 pb-3 backdrop-blur-md",
+        "mx-auto flex h-16 items-end gap-4 rounded-2xl bg-[#0d1117]/10 px-4 pb-3 backdrop-blur-sm",
         className,
       )}
     >
@@ -86,7 +86,7 @@ export const DockItem = ({ mouseX, children }: DockItemProps) => {
     <motion.div
       ref={ref}
       style={{ width }}
-      className="aspect-square w-10 rounded-full bg-[#0a0a0f] border border-white/10 text-white flex items-center justify-center shadow-[0_0_15px_rgba(0,240,255,0.1)]"
+      className="aspect-square w-10 rounded-full bg-[#0a0a0f]/50 text-white flex items-center justify-center"
     >
       <motion.div
         style={{ scale: iconSpring }}

@@ -36,6 +36,13 @@ const initDb = () => {
     // Column already exists, ignore
   }
 
+  // Add views column if it doesn't exist
+  try {
+    db.exec(`ALTER TABLE products ADD COLUMN views INTEGER NOT NULL DEFAULT 0`);
+  } catch {
+    // Column already exists, ignore
+  }
+
   // Create users table
   db.exec(`
     CREATE TABLE IF NOT EXISTS users (

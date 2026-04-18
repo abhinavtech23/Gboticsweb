@@ -15,6 +15,7 @@ export interface Product {
   description: string;
   price: number;
   color: "cyan" | "blue" | "purple" | "green" | "orange" | "red";
+  views: number;
   created_at: string;
 }
 
@@ -214,5 +215,18 @@ export async function updateProduct(formData: FormData) {
   } catch (error) {
     console.error("Failed to update product:", error);
     return { success: false, error: "Failed to update product" };
+  }
+}
+
+// Increment product view count
+export async function incrementProductView(id: number) {
+  try {
+    const stmt = db.prepare('UPDATE products SET views = views + 1 WHERE id = ?');
+    stmt.run(id);
+    // Note: Deliberately not revalidating everything here to prevent cache storming on heavy traffic
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to increment view:", error);
+    return { success: false };
   }
 }

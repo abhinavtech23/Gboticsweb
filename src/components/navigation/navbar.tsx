@@ -5,7 +5,7 @@ import { AnimatedDock } from "@/components/ui/animated-dock";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import { LogIn, User, ShieldCheck } from "lucide-react";
+import { LogOut, LogIn, User, ShieldCheck } from "lucide-react";
 
 interface AuthUser {
   id: number;
@@ -100,6 +100,16 @@ export default function Navbar() {
               <User size={15} />
               {user.name || user.email.split('@')[0]}
             </Link>
+            <button
+              onClick={async () => {
+                await fetch("/api/auth/logout", { method: "POST" });
+                window.location.href = "/login";
+              }}
+              className="px-4 py-2 text-sm font-medium text-red-400 border border-red-500/20 rounded-full hover:bg-red-500/10 transition-all flex items-center gap-2"
+              title="Sign Out"
+            >
+              <LogOut size={15} />
+            </button>
           </>
         ) : (
           <>

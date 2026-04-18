@@ -80,7 +80,7 @@ export function validateSession(token: string): UserPayload | null {
 
   // Check if session exists and hasn't expired
   const session = db.prepare(
-    'SELECT * FROM sessions WHERE token = ? AND expires_at > datetime("now")'
+    "SELECT * FROM sessions WHERE token = ? AND expires_at > datetime('now')"
   ).get(token) as { user_id: number } | undefined;
 
   if (!session) return null;
