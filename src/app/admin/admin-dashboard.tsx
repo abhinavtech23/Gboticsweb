@@ -25,7 +25,7 @@ export default function AdminDashboard({ initialProducts }: { initialProducts: P
 
   const handleDelete = async (id: number) => {
     if (!confirm("Are you sure you want to delete this product?")) return;
-    
+
     await deleteProduct(id);
     router.refresh();
   };
@@ -36,7 +36,7 @@ export default function AdminDashboard({ initialProducts }: { initialProducts: P
     setErrorMsg("");
 
     const formData = new FormData(e.currentTarget);
-    
+
     try {
       const result = await addProduct(formData);
       if (result.success) {
@@ -64,8 +64,8 @@ export default function AdminDashboard({ initialProducts }: { initialProducts: P
           {errorMsg && <p className="text-red-500 text-sm mb-4 text-center">{errorMsg}</p>}
           <div className="mb-6">
             <label className="block text-white/60 text-sm mb-2">Password</label>
-            <input 
-              type="password" 
+            <input
+              type="password"
               className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#00f0ff] transition-colors"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -97,13 +97,13 @@ export default function AdminDashboard({ initialProducts }: { initialProducts: P
                 Add New Product
               </h2>
               {errorMsg && <p className="text-red-500 text-sm mb-4">{errorMsg}</p>}
-              
+
               <form onSubmit={handleAddProduct} className="flex flex-col gap-4">
                 <div>
                   <label className="block text-white/60 text-sm mb-2">Product Name</label>
                   <input required name="name" type="text" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white outline-none focus:border-[#00f0ff]" placeholder="e.g. Nexus AI" />
                 </div>
-                
+
                 <div>
                   <label className="block text-white/60 text-sm mb-2">Category</label>
                   <select required name="category" className="w-full bg-[#0a0a0f] border border-white/10 rounded-lg px-4 py-2 text-white outline-none focus:border-[#00f0ff]">
@@ -112,7 +112,7 @@ export default function AdminDashboard({ initialProducts }: { initialProducts: P
                     <option value="Industrial">Industrial</option>
                   </select>
                 </div>
-                
+
                 <div>
                   <label className="block text-white/60 text-sm mb-2">Glow Color</label>
                   <select required name="color" className="w-full bg-[#0a0a0f] border border-white/10 rounded-lg px-4 py-2 text-white outline-none focus:border-[#00f0ff]">
@@ -121,7 +121,7 @@ export default function AdminDashboard({ initialProducts }: { initialProducts: P
                     <option value="purple">Purple</option>
                   </select>
                 </div>
-                
+
                 <div>
                   <label className="block text-white/60 text-sm mb-2">Description</label>
                   <textarea required name="description" rows={3} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white outline-none focus:border-[#00f0ff]" placeholder="Brief description of the product..."></textarea>
@@ -147,7 +147,7 @@ export default function AdminDashboard({ initialProducts }: { initialProducts: P
           <div className="lg:col-span-2">
             <div className="bg-[#0d1117] border border-white/10 rounded-2xl p-6 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
               <h2 className="text-xl font-bold mb-6">Current Products ({initialProducts.length})</h2>
-              
+
               <div className="flex flex-col gap-4">
                 {initialProducts.length === 0 ? (
                   <p className="text-white/40 italic">No products found. Add one to get started.</p>
@@ -162,7 +162,7 @@ export default function AdminDashboard({ initialProducts }: { initialProducts: P
                         </div>
                         <p className="text-sm text-white/50 line-clamp-1">{product.description}</p>
                       </div>
-                      <button 
+                      <button
                         onClick={() => handleDelete(product.id)}
                         className="w-10 h-10 rounded-lg bg-red-500/10 text-red-500 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all ml-4 shrink-0"
                         title="Delete Product"

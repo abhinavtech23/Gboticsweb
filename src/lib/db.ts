@@ -1,18 +1,21 @@
 import Database from 'better-sqlite3';
-import path from 'path';
+import bcrypt from 'bcryptjs';
 
 // Define the absolute path to the database on the D: drive
 const DB_PATH = 'D:\\GboticsData\\database.sqlite';
 
+// Admin credentials
+const ADMIN_EMAIL = 'gbotics.ai@gmail.com';
+const ADMIN_PASSWORD = 'GBOTICS@ogdeck9911';
+
 // Initialize the database connection.
-// We use a singleton pattern to avoid multiple connections in Next.js development.
 const initDb = () => {
   const db = new Database(DB_PATH);
 
-  // Enable foreign keys and WAL mode for better performance
+  // Enable WAL mode for better performance
   db.pragma('journal_mode = WAL');
 
-  // Create the products table if it doesn't exist
+  // Create the products table with price column
   db.exec(`
     CREATE TABLE IF NOT EXISTS products (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -20,39 +23,55 @@ const initDb = () => {
       category TEXT NOT NULL,
       image TEXT NOT NULL,
       description TEXT NOT NULL,
-      color TEXT NOT NULL,
+      price REAL NOT NULL DEFAULT 0,
+      color TEXT NOT NULL DEFAULT 'cyan',
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `);
 
-  // Seed initial data if the database is completely empty
-  const countStmt = db.prepare('SELECT COUNT(*) as count FROM products');
-  const result = countStmt.get() as { count: number };
+  // Add price column if it doesn't exist (migration for existing DB)
+  try {
+    db.exec(`ALTER TABLE products ADD COLUMN price REAL NOT NULL DEFAULT 0`);
+  } catch {
+    // Column already exists, ignore
+  }
 
-  if (result.count === 0) {
-    console.log("Database empty. Seeding initial products...");
-    const insertStmt = db.prepare(`
-      INSERT INTO products (name, category, image, description, color) 
+  // Create users table
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      email TEXT NOT NULL UNIQUE,
+      password_hash TEXT NOT NULL,
+      name TEXT NOT NULL DEFAULT '',
+      role TEXT NOT NULL DEFAULT 'customer',
+      is_verified INTEGER NOT NULL DEFAULT 0,
+      verification_token TEXT,
+      reset_token TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+
+  // Create sessions table
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS sessions (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL,
+      token TEXT NOT NULL UNIQUE,
+      expires_at DATETIME NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    )
+  `);
+
+  // Seed admin account if it doesn't exist
+  const adminCheck = db.prepare('SELECT id FROM users WHERE email = ?').get(ADMIN_EMAIL);
+  if (!adminCheck) {
+    console.log('Seeding admin account...');
+    const hash = bcrypt.hashSync(ADMIN_PASSWORD, 12);
+    db.prepare(`
+      INSERT INTO users (email, password_hash, name, role, is_verified)
       VALUES (?, ?, ?, ?, ?)
-    `);
-    
-    // Original Hardcoded products
-    const initialProducts = [
-      ["Arma-V 900", "Robotics", "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=2670&auto=format&fit=crop", "6-axis robotic arm with sub-millimeter precision for automotive assembly.", "cyan"],
-      ["Nexus Core AI", "AI", "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2670&auto=format&fit=crop", "Quantum-ready processor built specifically for real-time edge robotics processing.", "blue"],
-      ["Sentinel Drone", "Industrial", "https://images.unsplash.com/photo-1527430253228-e93688616381?q=80&w=2834&auto=format&fit=crop", "AI-powered drone for spatial mapping and hazardous environment inspection.", "purple"],
-      ["OpticFlow Vision", "AI", "https://images.unsplash.com/photo-1555255707-c07966088b7b?q=80&w=2832&auto=format&fit=crop", "Real-time computer vision system capable of identifying microscopic defects at 120fps.", "blue"],
-      ["TITAN Chassis", "Robotics", "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=2670&auto=format&fit=crop", "Heavy-duty autonomous mobile robot base capable of moving 2-ton payloads.", "cyan"],
-      ["Synapse OS", "Industrial", "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2670&auto=format&fit=crop", "Centralized factory automation software that controls up to 10,000 nodes simultaneously.", "purple"]
-    ];
-
-    const insertMany = db.transaction((products) => {
-      for (const prod of products) {
-        insertStmt.run(prod[0], prod[1], prod[2], prod[3], prod[4]);
-      }
-    });
-
-    insertMany(initialProducts);
+    `).run(ADMIN_EMAIL, hash, 'GBOTICS Admin', 'admin', 1);
   }
 
   return db;
